@@ -1,0 +1,40 @@
+<head>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    var svg = dimple.newSvg("body", 800, 600);
+    var data = [
+        {"label":"thrilled","value":19},
+        {"label":"terrified","value":23},
+        {"label":"unhappy","value":41},
+        {"label":"hateful","value":54},
+        {"label":"notgood","value":57},
+        {"label":"afraid","value":74},
+        {"label":"frustrated","value":98},
+        {"label":"scared","value":125},
+        {"label":"relaxed","value":139},
+        {"label":"depressed","value":150},
+        {"label":"optimistic","value":156},
+        {"label":"satisfied","value":178},
+        {"label":"angry","value":234},
+        {"label":"confused","value":313},
+        {"label":"lucky","value":461},
+        {"label":"wonderful","value":499},
+        {"label":"bad","value":1194},
+        {"label":"great","value":1470},
+        {"label":"sunny","value":1472},
+        {"label":"sad","value":2520},
+        {"label":"hope","value":6291},
+        {"label":"blessed","value":6847},
+        {"label":"happy","value":9865},
+        {"label":"love","value":62355}
+    ];
+    var chart = new dimple.chart(svg, data);
+    chart.addCategoryAxis("x", "label");
+    chart.addMeasureAxis("y", "value");
+    chart.addSeries(null, dimple.plot.bar);
+    chart.draw();
+</script>
+</body>

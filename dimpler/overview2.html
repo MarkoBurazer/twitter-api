@@ -1,0 +1,19 @@
+<html>
+<div id="chartContainer">
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+    <script type="text/javascript">
+        var svg = dimple.newSvg("#chartContainer", 590, 400);
+        d3.tsv("tags.tsv", function (data) {
+            var myChart = new dimple.chart(svg, data);
+            myChart.setBounds(75, 30, 480, 330)
+            myChart.addMeasureAxis("x", "label");
+            var y = myChart.addCategoryAxis("y", "value");
+            y.addOrderRule("Date");
+            myChart.addSeries("Channel", dimple.plot.bar);
+            myChart.addLegend(60, 10, 510, 20, "right");
+            myChart.draw();
+        });
+    </script>
+</div>
+</html>
