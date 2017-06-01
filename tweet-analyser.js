@@ -21,6 +21,7 @@ else {
   console.log('[1] Dateien aus Verzeichnis zusammenfügen');
   console.log('[2] Tweets aus Datei zusammenzählen (am häufigsten getweetete hashtags)');
   console.log('[3] Tweets aus Datei zusammenzählen (nur die search_queries filtern)');
+  console.log('[4] Alles Tags nach Vorkommen abspeichern')
   read_user_input.question('\nAuswahl: ', function(select) {
     switch (select) {
       case '1':
@@ -46,6 +47,14 @@ else {
           setRLToReadTweetsFile();
           tweetCounter(true);
           read_user_input.close();
+        });
+        break;
+      case '4':
+        read_user_input.question('Dateipfad: ', function(filename) {
+            file_name = filename;
+            setRLToReadTweetsFile();
+            tagCounter();
+            read_user_input.close();
         });
         break;
       default:
@@ -119,6 +128,64 @@ function tweetCounter(search_queries_only) {
           stringified += JSON.stringify(tag) + ',\n';
         });
         fs.appendFile(create_file, stringified + ']', function(err) {
+          if(err)
+            console.log(err);
+          else
+            console.log(create_file + ' erstellt.');
+        });
+      });
+    }
+    else {
+      console.log('ERROR: datei existiert bereits');
+    }
+  });
+
+
+}
+function tagCounter() {
+  var tweets = [];
+  var hashtags = "";
+
+  var create_file = file_name.replace('.json', 'tags.json');
+  fs.open(create_file, 'r', function (err, fd) {
+    if(err) {
+      var x = 0;
+      rl.on('line', function (line) {
+        x++;
+        // console.log('Line from file:', line);
+        // tweets.push(line);
+        line = line.replace(/\n/g, '');
+        var tweet = null;
+        try {
+          tweet = JSON.parse(line.substring(0,line.length-1));
+        }
+        catch (err) {
+          //
+        }
+        if(!tweet || tweet.limit) {
+          //some tweets are broken?
+          return;
+        }
+        tweets.push(tweet);
+        process.stdout.write('\r\x1b[Kprocessed '+tweets.length);
+      });
+
+      rl.on('close', function() {
+        process.stdout.write('\n');
+
+        var x = 0;
+        _.each(tweets, function(tweet) {
+          x++;
+          if(!tweet.entities) console.log(x, tweet);
+          var tmp_tags = tweet.entities.hashtags;
+          _.each(tmp_tags, function(tag) {
+            var hashtag_text = tag.text.toLowerCase();
+
+            hashtags += hashtag_text + ' '
+          });
+        });
+
+        fs.appendFile(create_file, hashtags, function(err) {
           if(err)
             console.log(err);
           else
