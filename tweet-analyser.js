@@ -108,15 +108,16 @@ function tweetCounter(search_queries_only) {
 
             if(hashtags[hashtag_text] !== undefined) {
               hashtags[hashtag_text].value += 1;
+
             }
             else{
               if(search_queries_only) {
                 if(search_queries.indexOf('#' + hashtag_text) > 0) {
-                  hashtags[hashtag_text] = { label: hashtag_text, value: 1 };
+                  hashtags[hashtag_text] = { label: hashtag_text, value: 1, date: tweet.created_at };
                 }
               }
               else {
-                hashtags[hashtag_text] = { label: hashtag_text, value: 1 };
+                hashtags[hashtag_text] = { label: hashtag_text, value: 1, date: tweet.created_at };
               }
             }
           });

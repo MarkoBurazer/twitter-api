@@ -1,25 +1,25 @@
-label	value
-thrilled	19
-terrified	23
-unhappy	41
-hateful	54
-notgood	57
-afraid	74
-frustrated	98
-scared	125
-relaxed	139
-depressed	150
-optimistic	156
-satisfied	178
-angry	234
-confused	313
-lucky	461
-wonderful	499
-bad	1194
-great	1470
-sunny	1472
-sad	2520
-hope	6291
-blessed	6847
-happy	9865
-love	62355
+label	value	date	emotion
+thrilled	19	Fri May 19 2017	pos
+terrified	23	Sun May 21 2017	pos
+unhappy	41	Sat May 20 2017	neg
+hateful	54	Sat May 20 2017	neg
+notgood	57	Sat May 20 2017	neg
+afraid	74	Sat May 20 2017	neg
+frustrated	98	Fri May 19 2017	neg
+scared	125	Sat May 20 2017	neg
+relaxed	139	Fri May 19 2017	pos
+depressed	150	Fri May 19 2017	neg
+optimistic	156	Fri May 19 2017	pos
+satisfied	178	Fri May 19 2017	pos
+angry	234	Fri May 19 2017	neg
+confused	313	Fri May 19 2017	neg
+lucky	461	Fri May 19 2017	pos
+wonderful	499	Fri May 19 2017	pos
+bad	1194	Fri May 19 2017	neg
+great	1470	Fri May 19 2017	pos
+sunny	1472	Fri May 19 2017	pos
+sad	2520	Fri May 19 2017	neg
+hope	6291	Fri May 19 2017	pos
+blessed	6847	Fri May 19 2017	pos
+happy	9865	Fri May 19 2017	pos
+love	62355	Fri May 19 2017	pos
