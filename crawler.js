@@ -14,17 +14,19 @@ var client = new Twitter({
 //positive: happy,  hope,  love,     relaxed, wonderful, blessed
 //negative: afraid, angry, confused, sad,     scared,    frustrated
 var search_queries = ['#happy', '#hope', '#love', '#relaxed', '#wonderful', '#blessed',
-                      '#afraid', '#angry', '#confused', '#love', '#scared', '#frustrated'];
+                      '#afraid', '#angry', '#confused', '#sad', '#scared', '#frustrated'];
 var search_query = '#happy';
 var crawl_counter = 1;
-var date = "2016-05-01";
+var date = "2017-05-17"
+var time = "10:57:47";
+var date2 = "2017-05-12";
 
 // _.each(search_queries, function(search_query) {
   console.log('crawling...' + search_query);
   for(var i=0; i < crawl_counter; i++) {
-    var query = '#happy';// + ' until:' + date;
+    var query = '#happy';//'#happy';// + ' until:' + date;
     console.log(query);
-    client.get('search/tweets', { q: query, until: date }, function(error, tweets, response) {
+    client.stream('search/tweets', { q: query, until:date }, function(error, tweets, response) {
       if(error) {
         console.log(error);
         return;
@@ -32,8 +34,9 @@ var date = "2016-05-01";
       console.log(tweets);
       var statuses = tweets.statuses;
       var string = JSON.stringify(statuses).slice(1,-1);
+      string = string.replace(/},{"created_at/g,'\n{"created_at')
 
-      fs.appendFile('tweets/'+search_query+'.json', string + ',', function(err) {
+      fs.appendFile('tweets/'+search_query+'.json', string + ',\n', function(err) {
         if(err) console.log(err);
         else
           console.log(search_query + ' ' + i + ' ...done!');
@@ -41,13 +44,3 @@ var date = "2016-05-01";
     });
   }
 // });
-
-
-function encodethis(toEncode) {
-  return encodeURIComponent(toEncode)
-    .replace(/!/g, '%21')
-    .replace(/'/g, '%27')
-    .replace(/\(/g, '%28')
-    .replace(/\)/g, '%29')
-    .replace(/\*/g, '%2A');
-}

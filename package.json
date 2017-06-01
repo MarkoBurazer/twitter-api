@@ -1,17 +1,27 @@
 {
   "name": "twitter-api",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node streamer.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "britecharts": "^1.5.3",
+    "d3-selection": "^1.1.0",
     "express": "^4.15.2",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "node-cron": "^1.1.3",
     "twitter": "^1.7.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://mburazer@bitbucket.org/mburazer/twitter-api.git"
+  },
+  "homepage": "https://bitbucket.org/mburazer/twitter-api#readme",
+  "description": ""
 }
