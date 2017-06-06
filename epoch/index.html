@@ -1,0 +1,44 @@
+<html>
+<head>
+  <title>Social3</title>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="epoch.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="epoch.min.css">
+</head>
+<body>
+
+<div id="test-1" class="epoch">
+
+
+
+<script>
+  $(function() {
+
+
+    var data = [{values: [{x:"frustrated",y:1},
+      {x:"depressed",y:1},
+      {x:"confused",y:2},
+      {x:"wonderful",y:2},
+      {x:"sunny",y:2},
+      {x:"sad",y:2},
+      {x:"bad",y:2},
+      {x:"scared",y:2},
+      {x:"great",y:3},
+      {x:"lucky",y:3},
+      {x:"hope",y:6},
+      {x:"blessed",y:6},
+      {x:"happy",y:33},
+      {x:"love",y:137}
+    ]}];
+
+    $('#test-1').epoch({
+      type: 'bar',
+      orientation: 'vertical',
+      data: data,
+      height: 400
+    });
+  });
+</script>
+</body>
+</html>
