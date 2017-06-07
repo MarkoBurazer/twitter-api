@@ -1,0 +1,28 @@
+{
+  "name": "flare",
+  "children": [
+    {"name":"terrified","size":41},
+    {"name":"thrilled","size":59},
+    {"name":"hateful","size":126},
+    {"name":"notgood","size":127},
+    {"name":"unhappy","size":157},
+    {"name":"afraid","size":172},
+    {"name":"frustrated","size":241},
+    {"name":"relaxed","size":348},
+    {"name":"satisfied","size":368},
+    {"name":"scared","size":368},
+    {"name":"optimistic","size":378},
+    {"name":"depressed","size":463},
+    {"name":"angry","size":552},
+    {"name":"confused","size":818},
+    {"name":"lucky","size":1145},
+    {"name":"wonderful","size":1164},
+    {"name":"bad","size":2786},
+    {"name":"sunny","size":2983},
+    {"name":"great","size":3442},
+    {"name":"sad","size":6217},
+    {"name":"hope","size":14740},
+    {"name":"blessed","size":23034},
+    {"name":"happy","size":26954},
+    {"name":"love","size":144224}]
+}
