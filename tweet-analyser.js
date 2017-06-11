@@ -22,7 +22,7 @@ else {
   console.log('[2] Tweets aus Datei zusammenzählen (am häufigsten getweetete hashtags)');
   console.log('[3] Tweets aus Datei zusammenzählen (nur die search_queries filtern)');
   console.log('[4] Alles Tags nach Vorkommen abspeichern')
-  console.log('[5] Tweets nach Location')
+  console.log('[5] Tweets nach Location');
   read_user_input.question('\nAuswahl: ', function(select) {
     switch (select) {
       case '1':
@@ -103,6 +103,7 @@ function locationCounter(search_queries_only, bubbles = false) {
           //some tweets are broken?
           return;
         }
+        tweet.uhrzeit = new Date(tweet.created_at) + (tweet.user.utc_offset*1000);
         tweets.push(tweet);
         process.stdout.write('\r\x1b[Kprocessed '+tweets.length);
       });
@@ -143,7 +144,7 @@ function locationCounter(search_queries_only, bubbles = false) {
           
         });
         hashtags = _.filter(hashtags, function(tag){
-            return (tag.value>20)
+            return (tag.value>10)
         });
         _.each(hashtags, function(tag) {
           tag.time_zone = _(tag.time_zone).groupBy().map(function(a,b){
