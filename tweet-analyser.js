@@ -119,7 +119,6 @@ function locationCounter(search_queries_only) {
             var hashtag_text = tag.text.toLowerCase();
             if(hashtags[hashtag_text] !== undefined) {
               hashtags[hashtag_text].value += 1;
-              console.log(hashtags[hashtag_text]);
               hashtags[hashtag_text].time_zone.push(loc);
 
             }
@@ -128,11 +127,9 @@ function locationCounter(search_queries_only) {
                 if(search_queries.indexOf('#' + hashtag_text) > 0) {
                   if(loc != null){
                     hashtags[hashtag_text] = { label: hashtag_text, value: 1, time_zone: [loc.toString()] };
-                    console.log(hashtags[hashtag_text]);
                   }
                   else{
                     hashtags[hashtag_text] = { label: hashtag_text, value: 1, time_zone: [] };
-                    console.log(hashtags[hashtag_text]);
                   }
                 }
               }
@@ -144,15 +141,10 @@ function locationCounter(search_queries_only) {
           
         });
 
-        _.each(hashtags, function(tag){
-            _.each(tag.time_zone, function(zone){
-                if(zone.count == undefined){
-                    zone.count = 1
-                }
-                else{
-                    zone.count += 1
-                }
-            });
+        _.each(hashtags, function(tag) {
+          tag.time_zone = _(tag.time_zone).groupBy().map(function(a,b){
+            return { country: b, count: a.length }
+          }).value();
         });
         
         var sorted_locations = _.sortBy(hashtags,['value']);
