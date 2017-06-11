@@ -147,6 +147,19 @@ function locationCounter(search_queries_only) {
           }).value();
         });
         
+        var locs = ""
+        _.each(hashtags, function(tag){
+            console.log(tag.time_zone)
+            _.each(tag.time_zone, function(zone){
+                console.log(zone.country)
+                if(zone.country != null)
+                    locs += zone.country.replace(/ /g, "") + "\n"
+            });
+        });
+        
+        
+        fs.appendFileSync("allLocs.json", locs)
+        
         var sorted_locations = _.sortBy(hashtags,['value']);
         var stringified = '[';
         _.each(sorted_locations, function(loc) {
