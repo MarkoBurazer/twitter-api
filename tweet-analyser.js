@@ -60,10 +60,12 @@ else {
         break;
       case '5':
         read_user_input.question('Dateipfad: ', function(filename) {
-            file_name = filename;
-            setRLToReadTweetsFile();
-            locationCounter();
-            read_user_input.close();
+            read_user_input.question('Bubbles?: ', function(bubbles) {
+                file_name = filename;
+                setRLToReadTweetsFile();
+                locationCounter(false, bubbles == "yes" ? true : false);
+                read_user_input.close();
+            });
         });
         break;
       default:
@@ -76,7 +78,7 @@ else {
 
 
 // erstellt .json datei mit liste der am häufigsten getweeteten hashtags (aufsteigend sortiert)
-function locationCounter(search_queries_only) {
+function locationCounter(search_queries_only, bubbles = false) {
   var tweets = [];
   var hashtags = {};
   var locations = {};
@@ -140,22 +142,40 @@ function locationCounter(search_queries_only) {
           });
           
         });
-
+        hashtags = _.filter(hashtags, function(tag){
+            return (tag.value>20)
+        });
         _.each(hashtags, function(tag) {
           tag.time_zone = _(tag.time_zone).groupBy().map(function(a,b){
             return { country: b, count: a.length }
           }).value();
         });
+
         
+
         var locs = ""
-        _.each(hashtags, function(tag){
-            console.log(tag.time_zone)
-            _.each(tag.time_zone, function(zone){
-                console.log(zone.country)
-                if(zone.country != null)
-                    locs += zone.country.replace(/ /g, "") + "\n"
+        
+        if(bubbles){
+            locs += "id,value\nflare,\n"
+            _.each(hashtags, function(tag){
+                locs += "flare." + tag.label +  ",\n";
+                _.each(tag.time_zone, function(zone){
+                    if(zone.country != "null"){
+                        locs += "flare." + tag.label +  "." + zone.country.replace(/ /g, "") + "," + zone.count + "\n"
+                    }
+                });
             });
-        });
+        }
+        else{
+            _.each(hashtags, function(tag){
+                console.log(tag.time_zone)
+                _.each(tag.time_zone, function(zone){
+                    console.log(zone.country)
+                    if(zone.country != "null")
+                        locs += zone.country.replace(/ /g, "") + "\n"
+                });
+            });
+        }
         
         
         fs.appendFileSync("allLocs.json", locs)
