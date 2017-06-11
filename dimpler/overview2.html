@@ -8,7 +8,7 @@
             var myChart = new dimple.chart(svg, data);
             myChart.setBounds(75, 30, 480, 330)
             myChart.addMeasureAxis("x", "value");
-            var y = myChart.addCategoryAxis("y", "date");
+            var y = myChart.addCategoryAxis("y", "hour");
             y.addOrderRule("date");
             myChart.addSeries("emotion", dimple.plot.bar);
             myChart.addLegend(60, 10, 510, 20, "right");
