@@ -22,6 +22,7 @@ else {
   console.log('[2] Tweets aus Datei zusammenzählen (am häufigsten getweetete hashtags)');
   console.log('[3] Tweets aus Datei zusammenzählen (nur die search_queries filtern)');
   console.log('[4] Alles Tags nach Vorkommen abspeichern')
+  console.log('[5] Tweets nach Location')
   read_user_input.question('\nAuswahl: ', function(select) {
     switch (select) {
       case '1':
@@ -57,6 +58,14 @@ else {
             read_user_input.close();
         });
         break;
+      case '5':
+        read_user_input.question('Dateipfad: ', function(filename) {
+            file_name = filename;
+            setRLToReadTweetsFile();
+            locationCounter();
+            read_user_input.close();
+        });
+        break;
       default:
         console.log('Ungültige Eingabe!');
         read_user_input.close();
@@ -67,11 +76,12 @@ else {
 
 
 // erstellt .json datei mit liste der am häufigsten getweeteten hashtags (aufsteigend sortiert)
-function tweetCounter(search_queries_only) {
+function locationCounter(search_queries_only) {
   var tweets = [];
   var hashtags = {};
+  var locations = {};
 
-  var create_file = file_name.replace('.json', search_queries_only ? 'tagcount_queries.json'  : 'tagcount.json');
+  var create_file = file_name.replace('.json', search_queries_only ? 'location_queries.json'  : 'location.json');
   fs.open(create_file, 'r', function (err, fd) {
     if(err) {
       var x = 0;
@@ -102,31 +112,53 @@ function tweetCounter(search_queries_only) {
         _.each(tweets, function(tweet) {
           x++;
           if(!tweet.entities) console.log(x, tweet);
+          if(!tweet.user) console.log("no user:", x, tweet);
           var tmp_tags = tweet.entities.hashtags;
+          var loc = tweet.user.time_zone;
           _.each(tmp_tags, function(tag) {
             var hashtag_text = tag.text.toLowerCase();
-
             if(hashtags[hashtag_text] !== undefined) {
               hashtags[hashtag_text].value += 1;
+              console.log(hashtags[hashtag_text]);
+              hashtags[hashtag_text].time_zone.push(loc);
 
             }
             else{
               if(search_queries_only) {
                 if(search_queries.indexOf('#' + hashtag_text) > 0) {
-                  hashtags[hashtag_text] = { label: hashtag_text, value: 1, date: tweet.created_at };
+                  if(loc != null){
+                    hashtags[hashtag_text] = { label: hashtag_text, value: 1, time_zone: [loc.toString()] };
+                    console.log(hashtags[hashtag_text]);
+                  }
+                  else{
+                    hashtags[hashtag_text] = { label: hashtag_text, value: 1, time_zone: [] };
+                    console.log(hashtags[hashtag_text]);
+                  }
                 }
               }
               else {
-                hashtags[hashtag_text] = { label: hashtag_text, value: 1, date: tweet.created_at };
+                hashtags[hashtag_text] = { label: hashtag_text, value: 1, time_zone: [loc] };
               }
             }
           });
+          
         });
 
-        var sorted_hashtags = _.sortBy(hashtags,['value']);
+        _.each(hashtags, function(tag){
+            _.each(tag.time_zone, function(zone){
+                if(zone.count == undefined){
+                    zone.count = 1
+                }
+                else{
+                    zone.count += 1
+                }
+            });
+        });
+        
+        var sorted_locations = _.sortBy(hashtags,['value']);
         var stringified = '[';
-        _.each(sorted_hashtags, function(tag) {
-          stringified += JSON.stringify(tag) + ',\n';
+        _.each(sorted_locations, function(loc) {
+          stringified += JSON.stringify(loc) + ',\n';
         });
         fs.appendFile(create_file, stringified + ']', function(err) {
           if(err)
@@ -140,9 +172,8 @@ function tweetCounter(search_queries_only) {
       console.log('ERROR: datei existiert bereits');
     }
   });
-
-
 }
+
 function tagCounter() {
   var tweets = [];
   var hashtags = "";
@@ -198,8 +229,6 @@ function tagCounter() {
       console.log('ERROR: datei existiert bereits');
     }
   });
-
-
 }
 
 function setRLToReadTweetsFile() {
