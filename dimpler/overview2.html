@@ -9,7 +9,7 @@
             myChart.setBounds(75, 30, 480, 330)
             myChart.addMeasureAxis("x", "value");
             var y = myChart.addCategoryAxis("y", "hour");
-            y.addOrderRule("date");
+            y.addOrderRule("hour", true);
             myChart.addSeries("emotion", dimple.plot.bar);
             myChart.addLegend(60, 10, 510, 20, "right");
             myChart.draw();
