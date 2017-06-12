@@ -1,0 +1,19 @@
+<html>
+<div id="chartContainer">
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+    <script type="text/javascript">
+        var svg = dimple.newSvg("#chartContainer", 800, 600);
+        d3.tsv("tags_pos.tsv", function (data) {
+            var myChart = new dimple.chart(svg, data);
+            myChart.setBounds(75, 30, 700, 500)
+            myChart.addMeasureAxis("x", "value");
+            var y = myChart.addCategoryAxis("y", "hour");
+            y.addOrderRule("hour", true);
+            myChart.addSeries("emotion", dimple.plot.bar);
+            myChart.addLegend(60, 10, 510, 20, "right");
+            myChart.draw();
+        });
+    </script>
+</div>
+</html>
