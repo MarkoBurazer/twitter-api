@@ -6,34 +6,34 @@
 <script type="text/javascript">
     var svg = dimple.newSvg("body", 1200, 800);
     var data = [
-        {"label":"terrified","value":42},
-        {"label":"thrilled","value":64},
-        {"label":"hateful","value":128},
-        {"label":"notgood","value":134},
-        {"label":"unhappy","value":159},
-        {"label":"afraid","value":178},
-        {"label":"frustrated","value":259},
-        {"label":"relaxed","value":360},
-        {"label":"scared","value":387},
-        {"label":"optimistic","value":392},
-        {"label":"satisfied","value":394},
-        {"label":"depressed","value":505},
-        {"label":"angry","value":593},
-        {"label":"confused","value":867},
-        {"label":"wonderful","value":1236},
-        {"label":"lucky","value":1506},
-        {"label":"bad","value":3028},
-        {"label":"sunny","value":3090},
-        {"label":"great","value":3638},
-        {"label":"sad","value":6510},
-        {"label":"hope","value":15656},
-        {"label":"blessed","value":23953},
-        {"label":"happy","value":31743},
-        {"label":"love","value":153190}
+        {"label":"terrified","number of tweets":42},
+        {"label":"thrilled","number of tweets":64},
+        {"label":"hateful","number of tweets":128},
+        {"label":"notgood","number of tweets":134},
+        {"label":"unhappy","number of tweets":159},
+        {"label":"afraid","number of tweets":178},
+        {"label":"frustrated","number of tweets":259},
+        {"label":"relaxed","number of tweets":360},
+        {"label":"scared","number of tweets":387},
+        {"label":"optimistic","number of tweets":392},
+        {"label":"satisfied","number of tweets":394},
+        {"label":"depressed","number of tweets":505},
+        {"label":"angry","number of tweets":593},
+        {"label":"confused","number of tweets":867},
+        {"label":"wonderful","number of tweets":1236},
+        {"label":"lucky","number of tweets":1506},
+        {"label":"bad","number of tweets":3028},
+        {"label":"sunny","number of tweets":3090},
+        {"label":"great","number of tweets":3638},
+        {"label":"sad","number of tweets":6510},
+        {"label":"hope","number of tweets":15656},
+        {"label":"blessed","number of tweets":23953},
+        {"label":"happy","number of tweets":31743},
+        {"label":"love","number of tweets":153190}
     ];
     var chart = new dimple.chart(svg, data);
     chart.addCategoryAxis("x", "label");
-    chart.addMeasureAxis("y", "value");
+    chart.addMeasureAxis("y", "number of tweets");
     chart.addSeries(null, dimple.plot.bar);
     chart.draw();
 </script>
